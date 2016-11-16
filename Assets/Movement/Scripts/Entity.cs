@@ -18,6 +18,7 @@ public class Entity : MonoBehaviour {
 		Human,
 		Decoy
 	}
+	
 	public ControlTypeEnum initControlType;
 	public int initPlayerNum = 0;
 
@@ -34,13 +35,12 @@ public class Entity : MonoBehaviour {
 	
 	void Update () {
 		Vector2 input = control.GetInput(Time.deltaTime, this);
-
-		//Super basic linear movement
-		transform.position = new Vector3(transform.position.x + input.x,
-										transform.position.y + input.y,
-										transform.position.z);
+		//get rid of 
+		input.Normalize();
+		GetComponent<Rigidbody2D>().AddForce(input * speed);
 	}
 
+	//Sort of a factory function to create and set a controlType with a given value
 	public void SetController(ControlTypeEnum controlType, int playerNum_in)
 	{
 		playerNum = playerNum_in;
@@ -48,18 +48,17 @@ public class Entity : MonoBehaviour {
 		{
 			case ControlTypeEnum.None:
 				control = new NoControl();
-				control.Awake();
 				break;
 			case ControlTypeEnum.Human:
 				PlayerControl newControl = new PlayerControl();
 				newControl.ID = playerNum;
 				control = newControl;
-				control.Awake();
 				break;
 			case ControlTypeEnum.Decoy:
-				Debug.Log("NOT IMPLEMENTED YET");
+				control = new DecoyControl();
 				break;
 		}
+		control.Awake();
 
 	}
 }
