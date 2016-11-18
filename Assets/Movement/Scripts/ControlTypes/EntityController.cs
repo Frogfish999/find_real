@@ -7,15 +7,19 @@
 
 using UnityEngine;
 using System.Collections;
+using find_real;
 
-public interface EntityController
+namespace find_real
 {
-	//Called for initialization when the entity is created
-	void Awake();
+	public interface EntityController
+	{
+		//Called for initialization when the entity is created
+		void Awake();
 
-	//Returns the Vector2 input
-	//deltaT should not be used to calculate speed,
-	//I put deltaT in so that decoys could implement behaviour as a function
-	//of passed time
-	Vector2 GetInput(float deltaT, Entity entity);
+		//Returns the Vector2 input
+		//deltaT should not be used to calculate speed,
+		//I put deltaT in so that decoys could implement behaviour as a function
+		//of passed time
+		Vector2 GetInput(float deltaT, Entity entity);
+	}
 }

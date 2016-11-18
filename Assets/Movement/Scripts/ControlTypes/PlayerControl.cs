@@ -9,21 +9,25 @@
  
 using UnityEngine;
 using System.Collections;
+using find_real;
 
-public class PlayerControl : EntityController {
-	//The ID that this Player will use in awake to grab the Rewired player
-	public int ID;
-	
-	//The player that input comes from
-	private Rewired.Player player;
+namespace find_real
+{
+	public class PlayerControl : EntityController {
+		//The ID that this Player will use in awake to grab the Rewired player
+		public int ID;
+		
+		//The player that input comes from
+		private Rewired.Player player;
 
-	public void Awake () {
-		player = Rewired.ReInput.players.GetPlayer(ID);
-	}
-	
-	public Vector2 GetInput(float deltaT, Entity entity)
-	{
-		return new Vector2(player.GetAxis("Move Horizontal"),
-						   player.GetAxis("Move Vertical"));
+		public void Awake () {
+			player = Rewired.ReInput.players.GetPlayer(ID);
+		}
+		
+		public Vector2 GetInput(float deltaT, Entity entity)
+		{
+			return new Vector2(player.GetAxis("Move Horizontal"),
+							player.GetAxis("Move Vertical"));
+		}
 	}
 }

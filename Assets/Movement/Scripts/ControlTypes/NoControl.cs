@@ -6,8 +6,12 @@
  */
 using UnityEngine;
 using System.Collections;
+using find_real;
 
-public class NoControl : EntityController {
-	public void Awake() {}
-	public Vector2 GetInput(float deltaT, Entity entity) {return new Vector2(0,0);}
+namespace find_real
+{
+	public class NoControl : EntityController {
+		public void Awake() {}
+		public Vector2 GetInput(float deltaT, Entity entity) {return new Vector2(0,0);}
+	}
 }

@@ -9,16 +9,17 @@
  */
 using UnityEngine;
 using System.Collections;
+using find_real;
 
-public class DecoyControl : EntityController {
+namespace find_real
+{
+	public class DecoyControl : EntityController {
 
-	public void Awake()
-	{
-
-	}
-	
-	public Vector2 GetInput(float deltaT, Entity entity)
-	{
-		return Vector2.right;
+		public void Awake() { }
+		
+		public Vector2 GetInput(float deltaT, Entity entity)
+		{
+			return Vector2.right;
+		}
 	}
 }
