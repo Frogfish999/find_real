@@ -4,6 +4,9 @@ find_real minigame for wolverinesoft long term project
 This is a minigame for the wolverinesoft long term project. Use this README to list design decisions ect.
 (We should probably only edit the "we can change this stuff section individually to make sure we're on the same page)
 
+Everything is now under the namespace find_real, I realized I was using super
+generic names like "entity" which other games may also use. This namespace will
+make our minigame a lot easier to implement into the main game.
 ------------------------------------------------
 This is basically finalized:
 
