@@ -1,0 +1,7 @@
+Success sound: Bubble pop
+Miss sound: sword swing swoosh
+Fail sound: Scream (panicked crowd, not a death scream) many voices
+Musical cue for player eliminated, revelation sound
+Music: Mission impossible-y, ambient, subtle
+Some sort of victory music cue
+Crowd sounds: Footsteps, mumbling 
