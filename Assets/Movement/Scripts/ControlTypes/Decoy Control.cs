@@ -6,6 +6,7 @@
  *  or perhaps move randomly (TBD)
  *
  *  V0.1 by Danny Reilman <reilman@umich.edu>
+ *  V0.2 Changed to random so they didn't just fly off the screen
  */
 using UnityEngine;
 using System.Collections;
@@ -19,7 +20,7 @@ namespace find_real
 		
 		public Vector2 GetInput(float deltaT, Entity entity)
 		{
-			return Vector2.right;
+			return Random.insideUnitCircle;
 		}
 	}
 }

@@ -46,7 +46,7 @@ namespace find_real
 		
 		void FixedUpdate () {
 			Vector2 input = control.GetInput(Time.deltaTime, this);
-			moveStyle.Move(input, GetComponent<Rigidbody2D>());
+			moveStyle.Move(input, GetComponentInChildren<Rigidbody2D>());
 		}
 
 		//Sort of a factory function to create and set a controlType with a given value
@@ -68,7 +68,7 @@ namespace find_real
 					break;
 			}
 			control.Awake();
-			Debug.Log("Changed to: " + controlType);
+			//Debug.Log("Changed to: " + controlType);
 		}
 
 		//Similar to above, sets the movementStyle

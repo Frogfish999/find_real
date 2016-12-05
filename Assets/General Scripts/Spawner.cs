@@ -25,7 +25,7 @@ namespace find_real
 		//Characters are temporarily stored so that the final result is always ballanced
 		private GameObject[] spawnedCharacters;
 
-		private int blockSpawningLayer;
+		public LayerMask blockSpawningLayer;
 
 		/**
 		* Spawn numEach entities for each of numPlayers in the spawnArea
@@ -34,17 +34,34 @@ namespace find_real
 		*/
 		public bool Spawn(int numPlayers, int numEach, Rect spawnArea)
 		{
+			bool failed = false;
 			blockSpawningLayer = LayerMask.NameToLayer("BlockSpawning");
 
 			spawnedCharacters = new GameObject[numPlayers];
 
 			Rect correctedSpawnArea = new Rect(spawnArea);
-			correctedSpawnArea.xMin += paddingDistance;
-			correctedSpawnArea.xMax -= paddingDistance;
-			correctedSpawnArea.yMin += paddingDistance;
-			correctedSpawnArea.yMax -= paddingDistance;
 
-			bool failed = false;
+			//If the rect would be inverted 
+			if(correctedSpawnArea.xMin + paddingDistance > correctedSpawnArea.xMax - paddingDistance)
+			{
+				failed = true;
+			}
+			else
+			{
+				correctedSpawnArea.xMin += paddingDistance;
+				correctedSpawnArea.xMax -= paddingDistance;
+			}
+
+			//If the rect would be inverted 
+			if(correctedSpawnArea.yMin + paddingDistance > correctedSpawnArea.yMax - paddingDistance)
+			{
+				failed = true;
+			}
+			else
+			{
+				correctedSpawnArea.yMin += paddingDistance;
+				correctedSpawnArea.yMax -= paddingDistance;
+			}
 
 			for(int i = 0; i < numEach && !failed; ++i)
 			{
@@ -63,7 +80,7 @@ namespace find_real
 				System.Array.Clear(spawnedCharacters, 0, spawnedCharacters.Length);
 			}
 
-			return failed;
+			return !failed;
 		}
 
 		//Spawn a single entity in the spawn area
@@ -75,7 +92,7 @@ namespace find_real
 			while(iterations < INFINITE_LOOP_GUARD)
 			{
 				Vector2 location = new Vector2(Random.Range(correctedSpawnArea.xMin, correctedSpawnArea.xMax), Random.Range(correctedSpawnArea.yMin, correctedSpawnArea.yMax));
-				Collider2D intersectingObject = Physics2D.OverlapCircle(location, paddingDistance, blockSpawningLayer);
+				Collider2D intersectingObject = Physics2D.OverlapCircle(location, paddingDistance);
 
 				if(intersectingObject == null)
 				{
@@ -83,6 +100,8 @@ namespace find_real
 					Entity entityScript = instance.GetComponentInChildren<Entity>();
 					entityScript.initControlType = Entity.ControlTypeEnum.Decoy;
 					entityScript.initPlayerNum = playerNum;
+
+					spawnedCharacters[playerNum-1] = instance;
 
 					return true;
 				}
@@ -96,7 +115,7 @@ namespace find_real
 		//Testing
 		void Start()
 		{
-			Debug.Log(Spawn(4,1,testRect));
+			Spawn(4,15,testRect);
 		}
 	}
 }
