@@ -44,7 +44,7 @@ namespace find_real
 			SetMovementStyle(Singleton.globalValues.movementStyle);
 		}
 		
-		void Update () {
+		void FixedUpdate () {
 			Vector2 input = control.GetInput(Time.deltaTime, this);
 			moveStyle.Move(input, GetComponent<Rigidbody2D>());
 		}

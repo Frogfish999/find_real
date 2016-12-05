@@ -1,0 +1,13 @@
+Success sound: Bubble pop, played when a kill is successfully made and decoys change color
+-Should be quick since it will be played many times in a row
+Miss sound: sword swing swoosh
+-Loud and obvious, used to locate a player 
+Fail sound: Scream (panicked crowd, not a death scream) many voices
+-For effect, don't go overboard with the scream sound, more like shuffling
+Musical cue for player eliminated, revelation sound
+-Victorious or whatever you think would work as a successful elimination sound
+Music: Mission impossible-y, ambient, subtle
+Some sort of victory music cue
+-Are we doing the same sound for this over each game?
+Crowd sounds: Footsteps, mumbling
+-Super subtle and ambient 
