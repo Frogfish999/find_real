@@ -5,7 +5,8 @@
  *  Since all input, AI and human, goes through this, we could somehow add pausing
  *  by editing the update method
  * 
- *  V1.0 By Danny Reilman <reilman@umich.edu>	
+ *  V1.0 By Danny Reilman <reilman@umich.edu>
+ *  V2.0 Added public variables for testing	
  */
 
 using UnityEngine;
@@ -30,11 +31,11 @@ namespace find_real
 
 		public ControlTypeEnum initControlType;
 		public int initPlayerNum = 0;
+		
+		public int playerNum;
 
-		//Internal values to hold control style, color/player color, and movementStyle
+		//values to hold control style, color/player color, and movementStyle
 		private EntityController control;
-		private int playerNum;
-
 		private EntityMovementStyle moveStyle;
 
 		//Intentionally Start instead of awake in order to be called after singleton awake
@@ -67,7 +68,7 @@ namespace find_real
 					break;
 			}
 			control.Awake();
-
+			Debug.Log("Changed to: " + controlType);
 		}
 
 		//Similar to above, sets the movementStyle
