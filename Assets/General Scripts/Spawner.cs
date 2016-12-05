@@ -35,7 +35,6 @@ namespace find_real
 		public bool Spawn(int numPlayers, int numEach, Rect spawnArea)
 		{
 			bool failed = false;
-			blockSpawningLayer = LayerMask.NameToLayer("BlockSpawning");
 
 			spawnedCharacters = new GameObject[numPlayers];
 
@@ -92,7 +91,7 @@ namespace find_real
 			while(iterations < INFINITE_LOOP_GUARD)
 			{
 				Vector2 location = new Vector2(Random.Range(correctedSpawnArea.xMin, correctedSpawnArea.xMax), Random.Range(correctedSpawnArea.yMin, correctedSpawnArea.yMax));
-				Collider2D intersectingObject = Physics2D.OverlapCircle(location, paddingDistance);
+				Collider2D intersectingObject = Physics2D.OverlapCircle(location, paddingDistance, blockSpawningLayer);
 
 				if(intersectingObject == null)
 				{
