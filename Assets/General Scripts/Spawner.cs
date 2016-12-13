@@ -74,6 +74,7 @@ namespace find_real
 						{
 							GameObject.Destroy(spawnedCharacters[k]);
 						}
+						
 						failed = true;
 					}
 				}
@@ -100,7 +101,8 @@ namespace find_real
 					Entity entityScript = instance.GetComponentInChildren<Entity>();
 					entityScript.initControlType = Entity.ControlTypeEnum.Decoy;
 					entityScript.initPlayerNum = playerNum;
-
+					entityScript.playerNum = playerNum;
+					
 					spawnedCharacters[playerNum-1] = instance;
 
 					return true;

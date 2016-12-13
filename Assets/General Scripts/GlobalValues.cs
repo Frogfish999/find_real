@@ -7,5 +7,6 @@ namespace find_real
 	public class GlobalValues : MonoBehaviour {
 		public int entitySpeed;
 		public Entity.MovementStyle movementStyle;
+		public Color[] playerColors;
 	}
 }

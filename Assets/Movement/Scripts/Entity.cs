@@ -29,6 +29,7 @@ namespace find_real
 			Constant
 		}
 
+		public SpriteRenderer sprite;
 		public ControlTypeEnum initControlType;
 		public int initPlayerNum = 0;
 		
@@ -40,7 +41,7 @@ namespace find_real
 
 		//Intentionally Start instead of awake in order to be called after singleton awake
 		void Start () {
-			SetController(initControlType, playerNum);
+			SetController(initControlType, initPlayerNum);
 			SetMovementStyle(Singleton.globalValues.movementStyle);
 		}
 		
@@ -65,10 +66,12 @@ namespace find_real
 					break;
 				case ControlTypeEnum.Decoy:
 					control = new DecoyControl();
+
 					break;
 			}
 			control.Awake();
-			//Debug.Log("Changed to: " + controlType);
+			
+			sprite.color = Singleton.globalValues.playerColors[playerNum];
 		}
 
 		//Similar to above, sets the movementStyle
