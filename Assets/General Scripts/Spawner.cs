@@ -27,6 +27,8 @@ namespace find_real
 
 		public LayerMask blockSpawningLayer;
 
+		public int spawnNumber;
+
 		/**
 		* Spawn numEach entities for each of numPlayers in the spawnArea
 		* Entities can push up to their padding circle being tangent with the spawn area edge, but no further
@@ -114,10 +116,11 @@ namespace find_real
 			return false;
 		}
 
+		
 		//Testing
 		void Start()
 		{
-			Spawn(4,15,testRect);
+			Spawn(4,spawnNumber,testRect);
 		}
 	}
 }

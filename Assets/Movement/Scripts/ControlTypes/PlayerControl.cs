@@ -19,15 +19,25 @@ namespace find_real
 		
 		//The player that input comes from
 		private Rewired.Player player;
+		private bool active;
 
 		public void Awake () {
 			player = Rewired.ReInput.players.GetPlayer(ID);
+			if(player == null)
+			{
+				active = false;
+			}
 		}
 		
 		public Vector2 GetInput(float deltaT, Entity entity)
 		{
-			return new Vector2(player.GetAxis("Move Horizontal"),
+			if(active)
+			{
+				return new Vector2(player.GetAxis("Move Horizontal"),
 							player.GetAxis("Move Vertical"));
+			}
+			
+			return new Vector2(0,0);
 		}
 	}
 }
