@@ -28,6 +28,10 @@ namespace find_real
 			Standard,
 			Constant
 		}
+		
+		public SpriteRenderer sprite;
+		public AttackHandler attacker;
+		public HurtboxHandler hurtbox;
 
 		public ControlTypeEnum initControlType;
 		public int initPlayerNum = 0;
@@ -38,15 +42,51 @@ namespace find_real
 		private EntityController control;
 		private EntityMovementStyle moveStyle;
 
+		private bool invunerable = false;
+
 		//Intentionally Start instead of awake in order to be called after singleton awake
 		void Start () {
-			SetController(initControlType, playerNum);
+			SetController(initControlType, initPlayerNum);
 			SetMovementStyle(Singleton.globalValues.movementStyle);
 		}
 		
 		void FixedUpdate () {
 			Vector2 input = control.GetInput(Time.deltaTime, this);
 			moveStyle.Move(input, GetComponentInChildren<Rigidbody2D>());
+		}
+
+		void Update()
+		{
+			if(control is PlayerControl)
+			{
+				var attackReturn = ((PlayerControl) control).GetAttackInput();
+
+				if(attackReturn.attack)
+				{
+					Attack(attackReturn.direction);
+				}
+			}
+
+			if(!invunerable)
+			{
+				int hitBy = hurtbox.CheckForHit(playerNum);
+
+				if(hitBy != -1)
+				{
+					Debug.Log("Hit by damageType " + hitBy);
+					StartCoroutine(InvunerableFrames());
+				}
+			}
+		}
+
+		private IEnumerator InvunerableFrames()
+		{
+			invunerable = true;
+			for(int i = 0; i < Singleton.globalValues.invulnFrames; ++i)
+			{
+				yield return 0;
+			}
+			invunerable = false;
 		}
 
 		//Sort of a factory function to create and set a controlType with a given value
@@ -57,18 +97,25 @@ namespace find_real
 			{
 				case ControlTypeEnum.None:
 					control = new NoControl();
+					transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Decoy");
 					break;
 				case ControlTypeEnum.Human:
 					PlayerControl newControl = new PlayerControl();
-					newControl.ID = playerNum;
+					newControl.ID = playerNum - 1;
 					control = newControl;
+					transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Player"+ (playerNum_in.ToString()));
+					transform.GetChild(1).gameObject.layer = LayerMask.NameToLayer("Player" + (playerNum_in.ToString())+ "Damage");
 					break;
 				case ControlTypeEnum.Decoy:
 					control = new DecoyControl();
+					transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Decoy"+ (playerNum_in.ToString()));
+					transform.GetChild(1).gameObject.layer = LayerMask.NameToLayer("Player" + (playerNum_in.ToString())+ "Damage");
+
 					break;
 			}
 			control.Awake();
-			//Debug.Log("Changed to: " + controlType);
+			
+			sprite.color = Singleton.globalValues.playerColors[playerNum];
 		}
 
 		//Similar to above, sets the movementStyle
@@ -83,6 +130,13 @@ namespace find_real
 					moveStyle = new ConstantNormalizedMovement();
 					break;
 			}
+		}
+
+		//Attack given a specified direction
+		private void Attack(Vector2 direction)
+		{
+			Debug.Log("Attacked at " + direction.x + ", " + direction.y);
+			attacker.Attack(direction, playerNum);
 		}
 	}
 }

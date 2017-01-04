@@ -27,6 +27,8 @@ namespace find_real
 
 		public LayerMask blockSpawningLayer;
 
+		public int spawnNumber;
+
 		/**
 		* Spawn numEach entities for each of numPlayers in the spawnArea
 		* Entities can push up to their padding circle being tangent with the spawn area edge, but no further
@@ -73,6 +75,7 @@ namespace find_real
 						{
 							GameObject.Destroy(spawnedCharacters[k]);
 						}
+						
 						failed = true;
 					}
 				}
@@ -91,15 +94,17 @@ namespace find_real
 			while(iterations < INFINITE_LOOP_GUARD)
 			{
 				Vector2 location = new Vector2(Random.Range(correctedSpawnArea.xMin, correctedSpawnArea.xMax), Random.Range(correctedSpawnArea.yMin, correctedSpawnArea.yMax));
+				//Check for intersecting players
 				Collider2D intersectingObject = Physics2D.OverlapCircle(location, paddingDistance, blockSpawningLayer);
-
+				
 				if(intersectingObject == null)
 				{
 					GameObject instance = (GameObject)GameObject.Instantiate(entity, location, Quaternion.identity);
 					Entity entityScript = instance.GetComponentInChildren<Entity>();
 					entityScript.initControlType = Entity.ControlTypeEnum.Decoy;
 					entityScript.initPlayerNum = playerNum;
-
+					entityScript.playerNum = playerNum;
+					
 					spawnedCharacters[playerNum-1] = instance;
 
 					return true;
@@ -111,10 +116,11 @@ namespace find_real
 			return false;
 		}
 
+		
 		//Testing
 		void Start()
 		{
-			Spawn(4,15,testRect);
+			Spawn(4,spawnNumber,testRect);
 		}
 	}
 }
